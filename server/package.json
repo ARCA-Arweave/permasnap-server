@@ -1,0 +1,28 @@
+{
+	"name": "permasnap",
+	"version": "1.0.0",
+	"description": "published your images permanently to the arweave blockweave",
+	"main": "app.js",
+	"scripts": {
+		"start-dev": "(nodemon --config \"./nodemon.json\")",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "ts-node src/app.ts",
+		"build": "npx tsc"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/express": "^4.17.2",
+		"@types/node": "^13.1.6",
+		"@types/request-promise": "^4.1.45",
+		"nodemon": "^2.0.2",
+		"typescript": "^3.7.4"
+	},
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"http": "0.0.0",
+		"sqlite3": "^4.1.1",
+		"typeorm": "^0.2.22"
+	}
+}
