@@ -1,7 +1,7 @@
 {
 	"name": "permasnap",
 	"version": "1.0.0",
-	"description": "published your images permanently to the arweave blockweave",
+	"description": "publish your images permanently to the arweave permaweb",
 	"main": "app.js",
 	"scripts": {
 		"start-dev": "(nodemon --config \"./nodemon.json\")",
