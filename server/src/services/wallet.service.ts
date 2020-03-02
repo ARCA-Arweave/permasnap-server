@@ -4,10 +4,10 @@ import Arweave from 'arweave/node'
 import { jwk2pem } from 'pem-jwk'
 import { JWKInterface } from 'arweave/node/lib/wallet'
 
-const keyLength = 4096
-const publicExponent = 0x10001
-const hashAlgorithm = 'sha256' 
-const encryptionAlgorithm = 'aes-256-cbc'
+const key_length = 4096
+const public_exponent = 0x10001
+const hash_algorithm = 'sha256' 
+const encryption_algorithm = 'aes-256-cbc'
 
 const instance = Arweave.init({
 	host: 'arweave.net', // Hostname or IP address for a Arweave host
@@ -21,16 +21,16 @@ instance.wallets.generate().then(async key => {
 	const wallet_from_key = await instance.wallets.jwkToAddress(key)
 	const pub_key = key.n
 	var pem = jwk2pem(key)
-	const signaturePayload = 'hihi'
-	const signed_message = sign(key, signaturePayload)
+	const signature_payload = 'hihi'
+	const signed_message = sign(key, signature_payload)
 	console.log(signed_message)
-	console.log(verify(pub_key, signaturePayload, signed_message))
+	console.log(verify(pub_key, signature_payload, signed_message))
 })
 
-function sign(jwk: JWKInterface, dataToSign: string) {
+function sign(jwk: JWKInterface, data_to_sign: string) {
 	let rawSignature = crypto
-		.createSign(hashAlgorithm)
-		.update(dataToSign)
+		.createSign(hash_algorithm)
+		.update(data_to_sign)
 		.sign({
 			key: jwk2pem(jwk),
 			padding: constants.RSA_PKCS1_PSS_PADDING,
@@ -39,15 +39,15 @@ function sign(jwk: JWKInterface, dataToSign: string) {
 	return rawSignature
 }
 
-function verify(publicModulus: string, data: string, signature: Buffer): boolean {
-	const publicKey = {
+function verify(public_modulus: string, data: string, signature: Buffer): boolean {
+	const public_key = {
 		kty: 'RSA',
 		e: 'AQAB',
-		n: publicModulus
+		n: public_modulus
 	}
-	const pem = jwk2pem(publicKey)
+	const pem = jwk2pem(public_key)
 	return crypto
-		.createVerify(hashAlgorithm)
+		.createVerify(hash_algorithm)
 		.update(data)
 		.verify(
 			{
