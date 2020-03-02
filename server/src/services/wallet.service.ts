@@ -6,7 +6,7 @@ import { JWKInterface } from 'arweave/node/lib/wallet'
 
 const keyLength = 4096
 const publicExponent = 0x10001
-const hashAlgorithm = 'sha256'
+const hashAlgorithm = 'sha256' 
 const encryptionAlgorithm = 'aes-256-cbc'
 
 const instance = Arweave.init({
