@@ -1,0 +1,12 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "permasnap-client",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.0.87:8100",
+    "cleartext": true
+  }
+}

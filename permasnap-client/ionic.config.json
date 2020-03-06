@@ -1,0 +1,7 @@
+{
+  "name": "permasnap-client",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
