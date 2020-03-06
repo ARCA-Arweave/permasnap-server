@@ -13,14 +13,13 @@ don't @ me yo ;)
 #### Prerequisites:
 - Android: install latest Android Studio
 - iOS: macBook+iPhone only, instructions to follow, but basically install Xcode
-
-Ensure ionic-cli installed: `npm install -g @ionic/cli`
+- Ensure ionic-cli installed: `npm install -g @ionic/cli`
 
 `cd permasnap-client`
 
 `npm install`
 
-To start in the browser without mobile (this will probably not work very well):
+To start in the browser without mobile: -- (this will probably not work very well)
 
 `ionic serve`
 
