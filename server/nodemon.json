@@ -1,6 +1,0 @@
-{
-    "watch": ["src", "../Shared"],
-    "ext": "ts",
-    "ignore": ["src/public"],
-    "exec": "ts-node src/app.ts"
-}
