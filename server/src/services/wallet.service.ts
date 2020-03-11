@@ -4,12 +4,9 @@ import Arweave from 'arweave/node'
 import { jwk2pem } from 'pem-jwk'
 import { JWKInterface } from 'arweave/node/lib/wallet'
 
-const key_length = 4096
-const public_exponent = 0x10001
 const hash_algorithm = 'sha256' 
-const encryption_algorithm = 'aes-256-cbc'
 
-const instance = Arweave.init({
+const ar_instance = Arweave.init({
 	host: 'arweave.net', // Hostname or IP address for a Arweave host
 	port: 443, // Port
 	protocol: 'https', // Network protocol http or https
@@ -17,14 +14,18 @@ const instance = Arweave.init({
 	logging: false // Enable network request logging})
 })
 
-instance.wallets.generate().then(async key => {
-	const wallet_from_key = await instance.wallets.jwkToAddress(key)
+ar_instance.wallets.generate().then(async key => {
+	const wallet_from_key = await ar_instance.wallets.jwkToAddress(key)
 	const pub_key = key.n
 	var pem = jwk2pem(key)
 	const signature_payload = 'hihi'
 	const signed_message = sign(key, signature_payload)
 	console.log(signed_message)
 	console.log(verify(pub_key, signature_payload, signed_message))
+	// const start_time = Date.now()
+	const hash = crypto.createHash(hash_algorithm).update('984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8').digest('hex')
+	// const end_time = Date.now()
+	// const computation_time = end_time - start_time
 })
 
 function sign(jwk: JWKInterface, data_to_sign: string) {
