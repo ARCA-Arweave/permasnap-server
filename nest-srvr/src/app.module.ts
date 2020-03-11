@@ -1,11 +1,23 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { WalletProvider } from './wallet.provider';
+import { Module } from '@nestjs/common'
+import { AppController } from './app.controller'
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
+import { AppService } from './app.service'
+import { WalletProvider } from './wallet.provider'
+import { Connection } from 'typeorm'
 
+const db_options: TypeOrmModuleOptions = {
+	name: 'default',
+	type: 'sqlite',
+	database: 'database.sqlite',
+	entities: [],
+	synchronize: true,
+	autoLoadEntities: true
+}
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService, WalletProvider],
+	imports: [TypeOrmModule.forRoot(db_options)],
+	controllers: [AppController],
+	providers: [AppService, WalletProvider]
 })
-export class AppModule {}
+export class AppModule {
+	constructor(private readonly connection: Connection) {}
+}

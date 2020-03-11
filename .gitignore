@@ -1,7 +1,6 @@
 TLS
 secrets
-server/*.sqlite
-
+*.sqlite
 
 # dependencies
 node_modules
