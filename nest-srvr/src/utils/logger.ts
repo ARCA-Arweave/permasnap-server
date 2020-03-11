@@ -1,8 +1,5 @@
 import * as colors from 'colors'
 
-/**
- * See https://www.npmjs.com/package/tracer for full configuration info.
- */
 export default require('tracer').colorConsole({
 	filters: [
 		colors.bgBlack,
