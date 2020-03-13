@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { ClientDelegatedTxnDto, DelegatedPostDataDto } from './types/dto'
+import { ClientDelegatedTxnDto } from './types/dto'
 import log from './utils/logger'
 import { ArweaveProvider } from './arweave.provider'
 

@@ -1,37 +1,56 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { IsBase64, IsString, MaxLength, IsOptional, IsArray } from 'class-validator'
 
 export class ClientDelegatedTxnDto {
+	/** Permasnap Parameters */
 	@ApiProperty()
-	psnap_payload: PermasnapPayloadDto
-	@ApiProperty()
-	dpost_data: DelegatedPostDataDto
-}
+	@IsBase64()
+	psnap_image: string
 
-export class PermasnapPayloadDto {
 	@ApiProperty()
-	psnap_image: string // b64 string.
+	@IsOptional()
+	@IsString()
+	@MaxLength(600)
+	psnap_description?: string
+
 	@ApiProperty()
-	psnap_description?: string // Max 400 characters
-	@ApiProperty()
+	@IsOptional()
+	@IsString()
 	psnap_location_country?: string
+
 	@ApiProperty()
+	@IsOptional()
+	@IsString()
 	psnap_location_city?: string
+
 	@ApiProperty()
+	@IsOptional()
+	@IsString()
 	psnap_location_free_text?: string
+
 	@ApiProperty()
+	@IsOptional()
+	@IsArray()
 	psnap_content_tag?: string[]
+
 	@ApiProperty()
+	@IsString()
 	psnap_app_version: string = '0.1'
+
 	@ApiProperty()
+	@IsString()
 	psnap_context: 'development' | 'production'
-}
 
-export class DelegatedPostDataDto {
-	dpost_version: '0.1'
+	/** Delegated Posting Parameters */
+	@ApiProperty()
+	@IsString()
+	dpost_version: string
+
+	@ApiProperty()
+	@IsString()
 	dpost_owner: string
+
+	@ApiProperty()
+	@IsString()
 	dpost_hash: string
-}
-
-export class IDelegatedPost extends DelegatedPostDataDto {
-
 }
