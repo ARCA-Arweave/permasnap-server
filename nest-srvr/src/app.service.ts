@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common'
-import { ClientDelegatedTxnDto } from './types/types'
+import { ClientDelegatedTxnDto, DelegatedPostDataDto } from './types/types'
 import log from './utils/logger'
-import { WalletProvider } from './wallet.provider'
+import { ArweaveProvider } from './arweave.provider'
 
 @Injectable()
 export class AppService {
-	constructor(private readonly walletProvider: WalletProvider) {}
-	async delegatedPost(delegated_post_data: ClientDelegatedTxnDto): Promise<string> {
+	constructor(private readonly arweaveProvider: ArweaveProvider) {}
+	async delegatedPost(delegated_post_data: ClientDelegatedTxnDto): Promise<void> {
 		log.log(delegated_post_data)
-		return 'Hello World!'
+		/** Step 1 Validate the payload */
+
+		/** Step 2 Check if the hash already exists on arweave */
+
+		/** Step 3 Validate the payload */
+
+		/** Step 4 Post to Arweave */
 	}
 }

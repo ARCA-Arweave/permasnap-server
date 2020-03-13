@@ -31,3 +31,7 @@ export class DelegatedPostDataDto {
 	dpost_owner: string
 	dpost_hash: string
 }
+
+export class IDelegatedPost extends DelegatedPostDataDto {
+
+}
