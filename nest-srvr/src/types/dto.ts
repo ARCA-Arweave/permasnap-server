@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { IsBase64, IsString, MaxLength, IsOptional, IsArray } from 'class-validator'
 
 export class ClientDelegatedTxnDto {
@@ -7,28 +7,28 @@ export class ClientDelegatedTxnDto {
 	@IsBase64()
 	psnap_image: string
 
-	@ApiProperty()
+	@ApiPropertyOptional()
 	@IsOptional()
 	@IsString()
 	@MaxLength(600)
 	psnap_description?: string
 
-	@ApiProperty()
+	@ApiPropertyOptional()
 	@IsOptional()
 	@IsString()
 	psnap_location_country?: string
 
-	@ApiProperty()
+	@ApiPropertyOptional()
 	@IsOptional()
 	@IsString()
 	psnap_location_city?: string
 
-	@ApiProperty()
+	@ApiPropertyOptional()
 	@IsOptional()
 	@IsString()
 	psnap_location_free_text?: string
 
-	@ApiProperty()
+	@ApiPropertyOptional()
 	@IsOptional()
 	@IsArray()
 	psnap_content_tag?: string[]
