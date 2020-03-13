@@ -4,6 +4,7 @@ import constants from 'constants'
 import Arweave from 'arweave/node'
 import { jwk2pem } from 'pem-jwk'
 import { JWKInterface } from 'arweave/node/lib/wallet'
+import { DelegatedPostDataDto } from './types/types'
 
 @Injectable()
 export class ArweaveProvider {
@@ -68,7 +69,7 @@ export class ArweaveProvider {
 			)
 	}
 
-	findDelegatedPostInstance(DelegatedPostDataDto) {
-		
+	findDelegatedPostInstance(delegated_post: DelegatedPostDataDto) {
+		const { dpost_hash, dpost_owner } = delegated_post
 	}
 }
