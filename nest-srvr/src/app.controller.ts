@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body } from '@nestjs/common'
 import { AppService } from './app.service'
 import { ApiOperation, ApiBody } from '@nestjs/swagger'
-import { ClientDelegatedTxnDto } from './types/types'
+import { ClientDelegatedTxnDto } from './types/dto'
 
 @Controller()
 export class AppController {

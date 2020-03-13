@@ -4,7 +4,7 @@ import constants from 'constants'
 import Arweave from 'arweave/node'
 import { jwk2pem } from 'pem-jwk'
 import { JWKInterface } from 'arweave/node/lib/wallet'
-import { DelegatedPostDataDto } from './types/types'
+import { DelegatedPostDataDto } from './types/dto'
 
 @Injectable()
 export class ArweaveProvider {
