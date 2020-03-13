@@ -7,10 +7,9 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 
 	const options = new DocumentBuilder()
-		.setTitle('Cats example')
-		.setDescription('The cats API description')
-		.setVersion('1.0')
-		.addTag('cats')
+		.setTitle('Permasnap API Docs')
+		.setDescription('Get some photos on the permaweb, yo')
+		.setVersion('0.1')
 		.build()
 	const document = SwaggerModule.createDocument(app, options)
 	SwaggerModule.setup('api', app, document)

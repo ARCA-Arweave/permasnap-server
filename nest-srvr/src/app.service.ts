@@ -8,12 +8,10 @@ export class AppService {
 	constructor(private readonly arweaveProvider: ArweaveProvider) {}
 	async delegatedPost(delegated_post_data: ClientDelegatedTxnDto): Promise<void> {
 		log.log(delegated_post_data)
-		/** Step 1 Validate the payload */
+		/** Step 1 Check if the hash already exists on arweave */
+		
+		/** Step 2 Validate the payload */
 
-		/** Step 2 Check if the hash already exists on arweave */
-
-		/** Step 3 Validate the payload */
-
-		/** Step 4 Post to Arweave */
+		/** Step 3 Post to Arweave */
 	}
 }

@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional, ApiPropertyOptions } from '@nestjs/swagger'
 import { IsBase64, IsString, MaxLength, IsOptional, IsArray } from 'class-validator'
 
 export class ClientDelegatedTxnDto {

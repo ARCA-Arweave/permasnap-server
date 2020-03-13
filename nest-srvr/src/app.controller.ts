@@ -11,6 +11,6 @@ export class AppController {
 	@ApiOperation({ summary: 'Send Delegated Post', description: 'Instructs the server to send a delegated post on your behalf.' })
 	@ApiBody({ type: ClientDelegatedTxnDto })
 	async delegatedPost(@Body() delegated_post_data: ClientDelegatedTxnDto) {
-		this.appService.delegatedPost(delegated_post_data)
+		return await this.appService.delegatedPost(delegated_post_data)
 	}
 }
