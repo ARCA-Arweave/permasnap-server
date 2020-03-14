@@ -4,9 +4,7 @@
 
 To Start : 
 
-From /server : `npm run start-dev`
-
-don't @ me yo ;)
+From /server : `npm run start:dev`
 
 ## Client
 
