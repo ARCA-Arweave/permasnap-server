@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
   IonRouterOutlet,
   IonFab,
-  IonFabButton
+  IonFabButton,
+  isPlatform
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { images, camera, searchSharp } from 'ionicons/icons';
+import { Plugins } from "@capacitor/core";
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -32,32 +34,47 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-        <IonRouterOutlet >
-          <Route path="/tab1" component={Tab1} exact={true} />
-          <Route path="/tab2" component={Tab2} exact={true} />
-          <Route path="/tab3" component={Tab3} />
-          <Route path="/" render={() => <Redirect to="/tab2" />} exact={true} />
-        </IonRouterOutlet>
-        <IonFab vertical='bottom' horizontal='start' >
-          <IonFabButton color="primary" href='/tab1'>
-            <IonIcon icon={images} />
-          </IonFabButton>
-        </IonFab>
-        <IonFab vertical='bottom' horizontal='center' >
-          <IonFabButton color='secondary' href='/tab2'>
-            <IonIcon icon={camera} />
-          </IonFabButton>
-        </IonFab>
-        <IonFab vertical='bottom' horizontal='end' >
-          <IonFabButton color='tertiary'  href='/tab3'>
-            <IonIcon icon={searchSharp} />
-          </IonFabButton>
-        </IonFab>
-    </IonReactRouter>
-  </IonApp>
-);
+/* Hitting backButton on Android exits */
+if(isPlatform('android')){
+  Plugins.App.addListener('backButton',() => {
+    Plugins.App.exitApp();
+  })
+}
+
+const App: React.FC = () => {
+  useEffect(()=>{
+    // hide SplashScreen
+  },[])//like c'tor
+  return (
+    <IonApp>
+      <IonReactRouter>
+          <IonRouterOutlet >
+            <Route path="/tab1" component={Tab1} exact={true} />
+            <Route path="/tab2" component={Tab2} exact={true} />
+            <Route path="/tab3" component={Tab3} exact={true} />
+            <Route path="/" render={() => <Redirect to="/tab2" />} exact={true} />
+          </IonRouterOutlet>
+          <IonFab vertical='bottom' horizontal='start' class={classIonFabs+' ion-padding-start ion-margin-start'}>
+            <IonFabButton color="secondary" href='/tab1'>
+              <img src='./assets/images/image-icon-colored.svg' />
+            </IonFabButton>
+          </IonFab>
+          <IonFab vertical='bottom' horizontal='center' class={classIonFabs}>
+            <IonFabButton color='primary' href='/tab2' onClick={() => alert("take a pic")}>
+              <IonIcon icon={camera} />
+            </IonFabButton>
+          </IonFab>
+          <IonFab vertical='bottom' horizontal='end' class={classIonFabs+' ion-padding-end ion-margin-end'}>
+            <IonFabButton color='tertiary'  href='/tab3'>
+              <IonIcon icon={searchSharp} />
+            </IonFabButton>
+          </IonFab>
+      </IonReactRouter>
+    </IonApp>
+  )
+}
 
 export default App;
+
+const classIonFabs = 'ion-padding-bottom ion-margin-bottom'
+const classFabIcons = "bigger" 
