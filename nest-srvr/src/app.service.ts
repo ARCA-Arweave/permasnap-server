@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { ClientDelegatedTxnDto } from './types/dto'
 import log from './utils/logger'
-import { ArweaveProvider } from './arweave.provider'
+import { ArweaveProvider } from './providers/arweave.provider'
 
 @Injectable()
 export class AppService {
@@ -25,7 +25,7 @@ export class AppService {
 
 			/** Step 4 -  */
 
-			
+			this.arweaveProvider.postDelegatedTxn(delegated_post_data)
 
 			return 'Success'
 		} catch (err) {

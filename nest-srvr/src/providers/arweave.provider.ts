@@ -4,12 +4,14 @@ import constants from 'constants'
 import Arweave from 'arweave/node'
 import { jwk2pem } from 'pem-jwk'
 import { JWKInterface } from 'arweave/node/lib/wallet'
-import { IPSnapPayload } from './types/types'
-import { ClientDelegatedTxnDto } from './types/dto'
+import { ClientDelegatedTxnDto } from '../types/dto'
+import { WalletProvider } from './wallet.provider'
 
 @Injectable()
 export class ArweaveProvider {
+	constructor(private readonly walletProvider: WalletProvider) {}
 	hash_algorithm = 'sha256'
+	wallet
 
 	ar_instance = Arweave.init({
 		host: 'arweave.net', // Hostname or IP address for a Arweave host
@@ -21,6 +23,7 @@ export class ArweaveProvider {
 
 	generateAndTest = async () => {
 		this.ar_instance.wallets.generate().then(async key => {
+			this.wallet = key
 			const wallet_from_key = await this.ar_instance.wallets.jwkToAddress(key)
 			const pub_key = key.n
 			var pem = jwk2pem(key)
@@ -112,13 +115,13 @@ export class ArweaveProvider {
 		return this.hash(JSON.stringify(to_hash))
 	}
 
-	public async postDelegatedTxn(post_data: ClientDelegatedTxnDto, wallet) {
+	public async postDelegatedTxn(post_data: ClientDelegatedTxnDto) {
 		try {
 			let tx = await this.ar_instance.createTransaction(
 				{
 					data: encodeURI(post_data.psnap_image)
 				},
-				wallet
+				this.wallet
 			)
 
 			for (let item in post_data) {
@@ -127,7 +130,7 @@ export class ArweaveProvider {
 				}
 			}
 
-			await this.ar_instance.transactions.sign(tx, wallet)
+			await this.ar_instance.transactions.sign(tx, this.wallet)
 			const post = await this.ar_instance.transactions.post(tx)
 			if (post && post.status !== 200) {
 				throw post.status
