@@ -25,7 +25,7 @@ export class AppService {
 
 			/** Step 4 -  */
 
-			this.arweaveProvider.postDelegatedTxn(delegated_post_data)
+			await this.arweaveProvider.postDelegatedTxn(delegated_post_data)
 
 			return 'Success'
 		} catch (err) {
