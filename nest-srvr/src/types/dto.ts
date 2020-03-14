@@ -53,4 +53,8 @@ export class ClientDelegatedTxnDto {
 	@ApiProperty()
 	@IsString()
 	dpost_hash: string
+
+	@ApiProperty()
+	@IsString()
+	dpost_signature: string
 }

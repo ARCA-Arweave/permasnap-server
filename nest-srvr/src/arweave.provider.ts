@@ -4,6 +4,8 @@ import constants from 'constants'
 import Arweave from 'arweave/node'
 import { jwk2pem } from 'pem-jwk'
 import { JWKInterface } from 'arweave/node/lib/wallet'
+import { IPSnapPayload } from './types/types'
+import { ClientDelegatedTxnDto } from './types/dto'
 
 @Injectable()
 export class ArweaveProvider {
@@ -25,8 +27,7 @@ export class ArweaveProvider {
 			const signature_payload = 'hihi'
 			const signed_message = this.sign(key, signature_payload)
 			console.log(signed_message)
-			console.log(this.verify(pub_key, signature_payload, signed_message))
-			// const start_time = Date.now()
+			console.log(this.verifyOwnership(pub_key, signature_payload, signed_message))
 			const hash = crypto
 				.createHash(this.hash_algorithm)
 				.update(
@@ -48,7 +49,7 @@ export class ArweaveProvider {
 		return rawSignature
 	}
 
-	verify(public_modulus: string, data: string, signature: Buffer): boolean {
+	verifyOwnership(public_modulus: string, data: string, signature: Buffer): boolean {
 		const public_key = {
 			kty: 'RSA',
 			e: 'AQAB',
@@ -68,7 +69,72 @@ export class ArweaveProvider {
 			)
 	}
 
-	findDelegatedPostInstance(delegated_post: { dpost_hash: string; dpost_owner: string }) {
-		const { dpost_hash, dpost_owner } = delegated_post
+	async checkPostExists(dpost_hash: string, dpost_owner: string) {
+		try {
+			return await this.ar_instance.arql({
+				op: 'and',
+				expr1: {
+					op: 'equals',
+					expr1: 'dpost_hash',
+					expr2: dpost_hash
+				},
+				expr2: {
+					op: 'equals',
+					expr1: 'dpost_owner',
+					expr2: dpost_owner
+				}
+			})
+		} catch (err) {
+			throw err
+		}
+	}
+
+	hash(data: string): string {
+		return crypto
+			.createHash(this.hash_algorithm)
+			.update(data)
+			.digest('hex')
+	}
+
+	verifyHash(post_data: ClientDelegatedTxnDto) {
+		const hash = this.hashPayload(post_data)
+		if (hash === post_data.dpost_hash) return true // hashes match
+		return false // hashes don't match
+	}
+
+	hashPayload(post_data: ClientDelegatedTxnDto) {
+		const to_hash = {}
+		for (let item in post_data) {
+			if (item.indexOf('psnap')) {
+				to_hash[item] = post_data[item]
+			}
+		}
+		return this.hash(JSON.stringify(to_hash))
+	}
+
+	public async postDelegatedTxn(post_data: ClientDelegatedTxnDto, wallet) {
+		try {
+			let tx = await this.ar_instance.createTransaction(
+				{
+					data: encodeURI(post_data.psnap_image)
+				},
+				wallet
+			)
+
+			for (let item in post_data) {
+				if (item !== 'psnap_image') {
+					tx.addTag(item, post_data[item])
+				}
+			}
+
+			await this.ar_instance.transactions.sign(tx, wallet)
+			const post = await this.ar_instance.transactions.post(tx)
+			if (post && post.status !== 200) {
+				throw post.status
+			}
+			return 'Success'
+		} catch (err) {
+			return { err }
+		}
 	}
 }
