@@ -9,5 +9,4 @@
 #### ArweaveProvider
 
 -   [ ] checkPostExists
--   [ ] verifyOwnership
--   [ ] verifyHash
+-   [x] verify

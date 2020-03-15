@@ -15,7 +15,7 @@ describe('Arweave Provider', () => {
 
 	/** verifyHash */
 
-	it('verify (signature and hash) - verification should pass', async () => {
+	it('verify - should pass', async () => {
 		// generate private key
 		const jwk = await provider.ar_instance.wallets.generate()
 		// public key
@@ -30,22 +30,32 @@ describe('Arweave Provider', () => {
 		expect(provider.verify(pub_key, hash, signature)).toEqual(true)
 	})
 
-	it('verify (signature and hash) - verification should fail', async () => {
+	it('verify (wrong public key) - should fail', async () => {
 		// generate private key
 		const jwk = await provider.ar_instance.wallets.generate()
-		// public key
-		const pub_key = jwk.n
 		// generate another key
 		const other_jwk = await provider.ar_instance.wallets.generate()
 		const other_pub_key = other_jwk.n
 		// arbitrary data
 		const verification_message = JSON.stringify({ message: 'im arbitrary' })
-		// hash it
 		const hash = provider.hash(verification_message)
-		// sign the hash
 		const signature = provider.sign(jwk, hash)
 		// verify that private key connected to the public key signed the hash
 		expect(provider.verify(other_pub_key, hash, signature)).toEqual(false)
+	})
+
+	it('verify (verify wrong hash) - should fail', async () => {
+		// generate private key
+		const jwk = await provider.ar_instance.wallets.generate()
+		// public key
+		const pub_key = jwk.n
+		// arbitrary data
+		const verification_message = JSON.stringify({ message: 'im arbitrary' })
+		const hash = provider.hash(verification_message)
+		const other_hash = provider.hash('im a wrong hash !!! D:')
+		const signature = provider.sign(jwk, hash)
+		// verify that private key connected to the public key signed the hash
+		expect(provider.verify(pub_key, other_hash, signature)).toEqual(false)
 	})
 
 	/** checkPostExists */
@@ -53,12 +63,6 @@ describe('Arweave Provider', () => {
 	it('checkPostExists - should find existing post', () => {})
 
 	it('checkPostExists - should fail to find existing post', () => {})
-
-	/** verifyOwnership */
-
-	it('verifyOwnership - verification should pass', () => {})
-
-	it('verifyOwnership - verification should fail', () => {})
 })
 
 // describe('root', () => {
