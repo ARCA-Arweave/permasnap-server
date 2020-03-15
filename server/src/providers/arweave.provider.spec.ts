@@ -56,9 +56,3 @@ describe('Arweave Provider', () => {
 
 	it('checkPostExists - should fail to find existing post', () => {})
 })
-
-// describe('root', () => {
-// 	it('should return "Hello World!"', async () => {
-// 		expect(await appController.delegatedPost()).toBe('Hello World!')
-// 	})
-// })
