@@ -13,7 +13,7 @@ describe('Arweave Provider', () => {
 		provider = module.get<ArweaveProvider>(ArweaveProvider)
 	})
 
-	/** verifyHash */
+	/** verify */
 
 	it('verify - should pass', async () => {
 		// generate private key
