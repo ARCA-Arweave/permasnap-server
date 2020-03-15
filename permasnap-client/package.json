@@ -5,6 +5,7 @@
   "dependencies": {
     "@capacitor/android": "^1.5.1",
     "@capacitor/core": "1.5.1",
+    "@capacitor/ios": "^1.5.1",
     "@ionic/react": "^5.0.0",
     "@ionic/react-router": "^5.0.0",
     "@testing-library/jest-dom": "^4.2.4",
@@ -28,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "resources": "npx capacitor-resources -p android,ios && node resources/resources.js"
   },
   "eslintConfig": {
     "extends": "react-app"
