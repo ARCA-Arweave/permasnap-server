@@ -15,15 +15,11 @@ export class AppService {
 			const hash_exists = await this.arweaveProvider.checkPostExists(dpost_hash, dpost_owner)
 			if (hash_exists.length) throw 'this delegated post hash already exists'
 
-			/** Step - 2 Validate the signature */
+			/** Step - 2 verify the signature */
 
 			if (!this.arweaveProvider.verify(dpost_owner, dpost_hash, Buffer.from(dpost_signature, 'utf8'))) throw 'dpost_signature could not be verified.'
 
-			/** Step 3 - Compute the # and check it against the # in the txn */
-
-			if (!this.arweaveProvider.verifyHash) throw 'Hash validation failed.'
-
-			/** Step 4 - Post to Arweave */
+			/** Step 3 - Post to Arweave */
 
 			await this.arweaveProvider.postDelegatedTxn(delegated_post_data)
 
