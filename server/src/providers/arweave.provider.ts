@@ -22,11 +22,9 @@ export class ArweaveProvider {
 			logging: false // Enable network request logging})
 		})
 
-		this.ar_instance.wallets.getBalance('1seRanklLU_1VTGkEk7P0xAwMJfA7owA1JHW5KyZKlY').then(balance => {
+		this.ar_instance.wallets.getBalance('ASd5vJJaEbwHQHQVTGQ9sh3kDb-EIjBL39r-YTOt9vM').then(balance => {
 			let winston = balance
 			let ar = this.ar_instance.ar.winstonToAr(balance)
-			log.log(winston)
-			log.log(ar)
 		})
 	}
 
