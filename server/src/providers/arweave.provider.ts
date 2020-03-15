@@ -6,24 +6,32 @@ import { jwk2pem } from 'pem-jwk'
 import { JWKInterface } from 'arweave/node/lib/wallet'
 import { ClientDelegatedTxnDto } from '../types/dto'
 import { WalletProvider } from './wallet.provider'
+import log from '../utils/logger'
 
 @Injectable()
 export class ArweaveProvider {
-	constructor(private readonly walletProvider: WalletProvider) {}
 	hash_algorithm = 'sha256'
-	wallet
+	wallet = this.walletProvider.wallet
+	ar_instance
+	constructor(private readonly walletProvider: WalletProvider) {
+		this.ar_instance = Arweave.init({
+			host: 'arweave.net', // Hostname or IP address for a Arweave host
+			port: 443, // Port
+			protocol: 'https', // Network protocol http or https
+			timeout: 20000, // Network request timeouts in milliseconds
+			logging: false // Enable network request logging})
+		})
 
-	ar_instance = Arweave.init({
-		host: 'arweave.net', // Hostname or IP address for a Arweave host
-		port: 443, // Port
-		protocol: 'https', // Network protocol http or https
-		timeout: 20000, // Network request timeouts in milliseconds
-		logging: false // Enable network request logging})
-	})
+		this.ar_instance.wallets.getBalance('1seRanklLU_1VTGkEk7P0xAwMJfA7owA1JHW5KyZKlY').then(balance => {
+			let winston = balance
+			let ar = this.ar_instance.ar.winstonToAr(balance)
+			log.log(winston)
+			log.log(ar)
+		})
+	}
 
 	generateAndTest = async () => {
 		this.ar_instance.wallets.generate().then(async key => {
-			this.wallet = key
 			const wallet_from_key = await this.ar_instance.wallets.jwkToAddress(key)
 			const pub_key = key.n
 			var pem = jwk2pem(key)
