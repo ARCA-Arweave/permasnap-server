@@ -15,7 +15,7 @@ describe('Arweave Provider', () => {
 
 	/** verifyHash */
 
-	it('verifyHash - verification should pass', async () => {
+	it('verify (signature and hash) - verification should pass', async () => {
 		// generate private key
 		const jwk = await provider.ar_instance.wallets.generate()
 		// public key
@@ -26,11 +26,11 @@ describe('Arweave Provider', () => {
 		const hash = provider.hash(verification_message)
 		// sign the hash
 		const signature = provider.sign(jwk, hash)
-		// verify that private key connected to the public key signed the hash
+		// verify that private key connected to the public key signed the hash, and that the hash is correct.
 		expect(provider.verify(pub_key, hash, signature)).toEqual(true)
 	})
 
-	it('verifyHash - verification should fail', async () => {
+	it('verify (signature and hash) - verification should fail', async () => {
 		// generate private key
 		const jwk = await provider.ar_instance.wallets.generate()
 		// public key
