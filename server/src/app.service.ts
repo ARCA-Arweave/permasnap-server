@@ -23,7 +23,7 @@ export class AppService {
 
 			if (!this.arweaveProvider.verifyHash) throw 'Hash validation failed.'
 
-			/** Step 4 -  */
+			/** Step 4 - Post to Arweave */
 
 			await this.arweaveProvider.postDelegatedTxn(delegated_post_data)
 

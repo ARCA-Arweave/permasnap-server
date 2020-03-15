@@ -27,7 +27,7 @@
     "@nestjs/typeorm": "^6.3.4",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
-    "colors": "^1.4.0",
+	"colors": "^1.4.0",
     "pem-jwk": "^2.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
