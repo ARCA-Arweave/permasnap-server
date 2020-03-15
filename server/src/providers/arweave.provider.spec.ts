@@ -27,7 +27,7 @@ describe('Arweave Provider', () => {
 		// sign the hash
 		const signature = provider.sign(jwk, hash)
 		// verify that private key connected to the public key signed the hash
-		expect(provider.verifyOwnership(pub_key, hash, signature)).toEqual(true)
+		expect(provider.verify(pub_key, hash, signature)).toEqual(true)
 	})
 
 	it('verifyHash - verification should fail', async () => {
@@ -45,7 +45,7 @@ describe('Arweave Provider', () => {
 		// sign the hash
 		const signature = provider.sign(jwk, hash)
 		// verify that private key connected to the public key signed the hash
-		expect(provider.verifyOwnership(other_pub_key, hash, signature)).toEqual(false)
+		expect(provider.verify(other_pub_key, hash, signature)).toEqual(false)
 	})
 
 	/** checkPostExists */

@@ -17,7 +17,7 @@ export class AppService {
 
 			/** Step - 2 Validate the signature */
 
-			if (!this.arweaveProvider.verifyOwnership(dpost_owner, dpost_hash, Buffer.from(dpost_signature, 'utf8'))) throw 'dpost_signature could not be verified.'
+			if (!this.arweaveProvider.verify(dpost_owner, dpost_hash, Buffer.from(dpost_signature, 'utf8'))) throw 'dpost_signature could not be verified.'
 
 			/** Step 3 - Compute the # and check it against the # in the txn */
 

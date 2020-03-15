@@ -36,7 +36,7 @@ export class ArweaveProvider {
 			const signature_payload = 'hihi'
 			const signed_message = this.sign(key, signature_payload)
 			console.log(signed_message)
-			console.log(this.verifyOwnership(pub_key, signature_payload, signed_message))
+			console.log(this.verify(pub_key, signature_payload, signed_message))
 			const hash = crypto
 				.createHash(this.hash_algorithm)
 				.update(
@@ -58,7 +58,7 @@ export class ArweaveProvider {
 		return rawSignature
 	}
 
-	verifyOwnership(public_modulus: string, data: string, signature: Buffer): boolean {
+	verify(public_modulus: string, data: string, signature: Buffer): boolean {
 		const public_key = {
 			kty: 'RSA',
 			e: 'AQAB',
