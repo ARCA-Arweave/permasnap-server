@@ -18,7 +18,6 @@ const Tab2: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Tab 2 page" />
-        <img src={require('../assets/img/splash-ink.svg')} height='200' />
       </IonContent>
     </IonPage>
   );

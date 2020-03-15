@@ -43,7 +43,7 @@ if(isPlatform('android')){
 
 const App: React.FC = () => {
   useEffect(()=>{
-    // hide SplashScreen
+    Plugins.SplashScreen.hide()
   },[])//like c'tor
   return (
     <IonApp>
@@ -56,17 +56,17 @@ const App: React.FC = () => {
           </IonRouterOutlet>
           <IonFab vertical='bottom' horizontal='start' class={classIonFabs+' ion-padding-start ion-margin-start'}>
             <IonFabButton color="secondary" href='/tab1'>
-              <img src='./assets/images/image-icon-colored.svg' />
+              <img src={require('./assets/img/icon-images.svg')} />
             </IonFabButton>
           </IonFab>
           <IonFab vertical='bottom' horizontal='center' class={classIonFabs}>
             <IonFabButton color='primary' href='/tab2' onClick={() => alert("take a pic")}>
-              <IonIcon icon={camera} />
+              <img src={require('./assets/img/icon-camera-200.png')} />
             </IonFabButton>
           </IonFab>
           <IonFab vertical='bottom' horizontal='end' class={classIonFabs+' ion-padding-end ion-margin-end'}>
             <IonFabButton color='tertiary'  href='/tab3'>
-              <IonIcon icon={searchSharp} />
+              <img src={require('./assets/img/icon-eye.svg')} />
             </IonFabButton>
           </IonFab>
       </IonReactRouter>
