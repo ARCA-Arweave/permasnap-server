@@ -12,7 +12,8 @@ import log from '../utils/logger'
 export class ArweaveProvider {
 	hash_algorithm = 'sha256'
 	wallet = this.walletProvider.wallet
-	ar_instance
+	ar_instance: Arweave
+	
 	constructor(private readonly walletProvider: WalletProvider) {
 		this.ar_instance = Arweave.init({
 			host: 'arweave.net', // Hostname or IP address for a Arweave host
@@ -26,6 +27,10 @@ export class ArweaveProvider {
 			let winston = balance
 			let ar = this.ar_instance.ar.winstonToAr(balance)
 		})
+	}
+
+	generateWallet = async () => {
+		return await this.ar_instance.wallets.generate().then(jwt => jwt)
 	}
 
 	generateAndTest = async () => {

@@ -32,8 +32,8 @@ describe('Arweave Provider', () => {
 
 	it('verify (wrong public key) - should fail', async () => {
 		const jwk = await provider.ar_instance.wallets.generate()
-		const other_jwk = await provider.ar_instance.wallets.generate()
-		const other_pub_key = other_jwk.n
+		const other_pub_key = await provider.ar_instance.wallets.generate().then(jwk => jwk.n)
+		// const other_pub_key = other_jwk.n
 		const verification_message = JSON.stringify({ message: 'im arbitrary' })
 		const hash = provider.hash(verification_message)
 		const signature = provider.sign(jwk, hash)
