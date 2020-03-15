@@ -22,7 +22,6 @@ describe('Arweave Provider', () => {
 		const pub_key = jwk.n
 		// arbitrary data
 		const verification_message = JSON.stringify({ message: 'im arbitrary' })
-		// stringify it
 		// hash it
 		const hash = provider.hash(verification_message)
 		// sign the hash
@@ -31,8 +30,22 @@ describe('Arweave Provider', () => {
 		expect(provider.verifyOwnership(pub_key, hash, signature)).toEqual(true)
 	})
 
-	it('verifyHash - verification should fail', () => {
-		expect(provider).toBeDefined()
+	it('verifyHash - verification should fail', async () => {
+		// generate private key
+		const jwk = await provider.ar_instance.wallets.generate()
+		// public key
+		const pub_key = jwk.n
+		// generate another key
+		const other_jwk = await provider.ar_instance.wallets.generate()
+		const other_pub_key = other_jwk.n
+		// arbitrary data
+		const verification_message = JSON.stringify({ message: 'im arbitrary' })
+		// hash it
+		const hash = provider.hash(verification_message)
+		// sign the hash
+		const signature = provider.sign(jwk, hash)
+		// verify that private key connected to the public key signed the hash
+		expect(provider.verifyOwnership(other_pub_key, hash, signature)).toEqual(false)
 	})
 
 	/** checkPostExists */
