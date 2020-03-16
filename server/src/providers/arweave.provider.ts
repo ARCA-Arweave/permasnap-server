@@ -13,7 +13,7 @@ export class ArweaveProvider {
 	hash_algorithm = 'sha256'
 	wallet = this.walletProvider.wallet
 	ar_instance: Arweave
-	
+
 	constructor(private readonly walletProvider: WalletProvider) {
 		this.ar_instance = Arweave.init({
 			host: 'arweave.net', // Hostname or IP address for a Arweave host
@@ -44,9 +44,7 @@ export class ArweaveProvider {
 			console.log(this.verify(pub_key, signature_payload, signed_message))
 			const hash = crypto
 				.createHash(this.hash_algorithm)
-				.update(
-					'984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8984fksjh3289efkhr98feslniw34h8fenlgsrho8'
-				)
+				.update('abvc123')
 				.digest('hex')
 		})
 	}
@@ -85,7 +83,7 @@ export class ArweaveProvider {
 
 	async checkPostExists(dpost_hash: string, dpost_owner: string) {
 		try {
-			return await this.ar_instance.arql({
+			const res = await this.ar_instance.arql({
 				op: 'and',
 				expr1: {
 					op: 'equals',
@@ -98,6 +96,8 @@ export class ArweaveProvider {
 					expr2: dpost_owner
 				}
 			})
+			console.log(res)
+			return res
 		} catch (err) {
 			throw err
 		}
@@ -119,7 +119,7 @@ export class ArweaveProvider {
 	hashPayload(post_data: ClientDelegatedTxnDto) {
 		const to_hash = {}
 		for (let item in post_data) {
-			if (item.indexOf('psnap')) {
+			if (item.indexOf('psnap') > -1) {
 				to_hash[item] = post_data[item]
 			}
 		}
@@ -130,23 +130,27 @@ export class ArweaveProvider {
 		try {
 			let tx = await this.ar_instance.createTransaction(
 				{
-					data: encodeURI(post_data.psnap_image)
+					data: encodeURI('post_data.psnap_image')
 				},
 				this.wallet
 			)
 
 			for (let item in post_data) {
-				if (item !== 'psnap_image') {
+				if (item === 'psnap_content_tag') {
+					;(post_data[item] as string[]).forEach(content_tag => {
+						tx.addTag(item, content_tag)
+					})
+				} else if (item !== 'psnap_image') {
 					tx.addTag(item, post_data[item])
 				}
 			}
 
 			await this.ar_instance.transactions.sign(tx, this.wallet)
 			const post = await this.ar_instance.transactions.post(tx)
-			if (post && post.status !== 200) {
-				throw post.status
+			if (post.status >= 400) {
+				throw post
 			}
-			return 'Success'
+			return { status: post.status, id: tx.id }
 		} catch (err) {
 			return { err }
 		}

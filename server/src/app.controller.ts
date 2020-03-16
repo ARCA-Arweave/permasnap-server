@@ -7,10 +7,12 @@ import { ClientDelegatedTxnDto } from './types/dto'
 export class AppController {
 	constructor(private readonly appService: AppService) {}
 
-	@Post('delegated_post')
+	@Post('d_post')
 	@ApiOperation({ summary: 'Send Delegated Post', description: 'Instructs the server to send a delegated post on your behalf.' })
 	@ApiBody({ type: ClientDelegatedTxnDto })
 	async delegatedPost(@Body() delegated_post_data: ClientDelegatedTxnDto) {
-		return await this.appService.delegatedPost(delegated_post_data)
+		const res = await this.appService.delegatedPost(delegated_post_data)
+		console.log(res)
+		return res
 	}
 }

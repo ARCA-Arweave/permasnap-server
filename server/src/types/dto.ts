@@ -7,6 +7,10 @@ export class ClientDelegatedTxnDto {
 	@IsBase64()
 	psnap_image: string
 
+	@ApiProperty()
+	@IsString()
+	psnap_image_encoding: string
+
 	@ApiPropertyOptional()
 	@IsOptional()
 	@IsString()
