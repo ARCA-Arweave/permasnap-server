@@ -7,6 +7,8 @@ import { JWKInterface } from 'arweave/node/lib/wallet'
 import { ClientDelegatedTxnDto } from '../types/dto'
 import { WalletProvider } from './wallet.provider'
 import log from '../utils/logger'
+import { ReadPreference } from 'typeorm'
+import Transaction from 'arweave/node/lib/transaction'
 
 @Injectable()
 export class ArweaveProvider {
@@ -103,6 +105,52 @@ export class ArweaveProvider {
 		}
 	}
 
+	async getAllDelegatedPosts() {
+		try {
+			const res = await this.ar_instance.arql({
+				op: 'and',
+				expr1: {
+					op: 'equals',
+					expr1: 'dpost_version',
+					expr2: '0.1'
+				},
+				expr2: {
+					op: 'equals',
+					expr1: 'psnap_context',
+					expr2: 'development'
+				}
+			})
+			return res
+		} catch (err) {
+			throw err
+		}
+	}
+
+	async getPostData(postIds: string[]): Promise<Array<any>> {
+		const resolved: ClientDelegatedTxnDto[] = []
+		const toResolve: Promise<Transaction>[] = []
+
+		postIds.forEach(id => {
+			toResolve.push(this.ar_instance.transactions.get(id))
+		})
+		return Promise.all(toResolve).then(transactions => {
+			transactions.forEach(tx => {
+				const permasnap_object = {} as ClientDelegatedTxnDto
+				const psnap_image = decodeURI(tx.get('data', { decode: true, string: true }))
+				const tags = tx.get('tags') as unknown
+				;(tags as string[]).forEach((tag: any) => {
+					// log.log(tag)
+					let key = tag.get('name', { decode: true, string: true }) as string
+					let value: string = tag.get('value', { decode: true, string: true })
+					permasnap_object[key] = value
+					permasnap_object.psnap_image = psnap_image
+					resolved.push(permasnap_object)
+				})
+			})
+			return resolved
+		})
+	}
+
 	hash(data: string): string {
 		return crypto
 			.createHash(this.hash_algorithm)
@@ -119,6 +167,7 @@ export class ArweaveProvider {
 	hashPayload(post_data: ClientDelegatedTxnDto) {
 		const to_hash = {}
 		for (let item in post_data) {
+			console.log(item)
 			if (item.indexOf('psnap') > -1) {
 				to_hash[item] = post_data[item]
 			}
