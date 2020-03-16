@@ -27,27 +27,27 @@ describe('Arweave Provider', () => {
 		// sign the hash
 		const signature = provider.sign(jwk, hash)
 		// verify that private key connected to the public key signed the hash, and that the hash is correct.
-		expect(provider.verify(pub_key, hash, signature)).toEqual(true)
+		expect(provider.verifyOwnership(pub_key, hash, signature)).toEqual(true)
 	})
 
-	it('verify (wrong public key) - should fail', async () => {
+	it('verifyOwnership (wrong public key) - should fail', async () => {
 		const jwk = await provider.ar_instance.wallets.generate()
 		const other_pub_key = await provider.ar_instance.wallets.generate().then(jwk => jwk.n)
 		// const other_pub_key = other_jwk.n
 		const verification_message = JSON.stringify({ message: 'im arbitrary' })
 		const hash = provider.hash(verification_message)
 		const signature = provider.sign(jwk, hash)
-		expect(provider.verify(other_pub_key, hash, signature)).toEqual(false)
+		expect(provider.verifyOwnership(other_pub_key, hash, signature)).toEqual(false)
 	})
 
-	it('verify (verify wrong hash) - should fail', async () => {
+	it('verifyOwnership (wrong hash) - should fail', async () => {
 		const jwk = await provider.ar_instance.wallets.generate()
 		const pub_key = jwk.n
 		const verification_message = JSON.stringify({ message: 'im arbitrary' })
 		const hash = provider.hash(verification_message)
 		const other_hash = provider.hash('im a wrong hash !!! D:')
 		const signature = provider.sign(jwk, hash)
-		expect(provider.verify(pub_key, other_hash, signature)).toEqual(false)
+		expect(provider.verifyOwnership(pub_key, other_hash, signature)).toEqual(false)
 	})
 
 	/** checkPostExists */

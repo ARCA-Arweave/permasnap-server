@@ -16,7 +16,7 @@ export class AppService {
 			if (hash_exists.length) return new Error('this delegated post hash already exists')
 
 			/** Step - 2 verify the signature */
-			if (!this.arweaveProvider.verify(dpost_owner, dpost_hash, Buffer.from(dpost_signature, 'base64'))) throw 'dpost_signature could not be verified.'
+			if (!this.arweaveProvider.verifyOwnership(dpost_owner, dpost_hash, Buffer.from(dpost_signature, 'base64'))) throw 'dpost_signature could not be verified.'
 
 			/** Verify Hash */
 			if (!this.arweaveProvider.verifyHash(delegated_post_data)) throw 'hash verification failed.'

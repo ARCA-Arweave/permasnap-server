@@ -61,7 +61,7 @@ export class ArweaveProvider {
 		return rawSignature
 	}
 
-	verify(public_modulus: string, data: string, signature: Buffer): boolean {
+	verifyOwnership(public_modulus: string, data: string, signature: Buffer): boolean {
 		const public_key = {
 			kty: 'RSA',
 			e: 'AQAB',

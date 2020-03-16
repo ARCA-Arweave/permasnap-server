@@ -20,11 +20,10 @@ const run = async () => {
 
 	const { dpost_hash, dpost_owner, dpost_signature } = delegated_post_data
 	const verifyHash = arweaveProvider.verifyHash(delegated_post_data)
-	console.log(verifyHash)
-	const verify = arweaveProvider.verify(dpost_owner, dpost_hash, Buffer.from(dpost_signature))
+	const verifyOwnership = arweaveProvider.verifyOwnership(dpost_owner, dpost_hash, Buffer.from(dpost_signature))
 
-	log.log(`verify: ${verify}`)
-
+	log.log(`verifyHash: ${verifyHash}`)
+	log.log(`verifyOwnership: ${verifyOwnership}`)
 }
 
 run()
