@@ -12,7 +12,6 @@ export class AppController {
 	@ApiBody({ type: ClientDelegatedTxnDto })
 	async delegatedPost(@Body() delegated_post_data: ClientDelegatedTxnDto) {
 		const res = await this.appService.delegatedPost(delegated_post_data)
-		console.log(res)
 		return res
 	}
 }

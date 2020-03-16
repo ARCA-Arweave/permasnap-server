@@ -17,12 +17,11 @@ const key = arweaveProvider.generateWallet().then(async jwk => {
 	const pub_key = jwk.n
 
 	const image_parts = image.split(',')
-	console.log(image_parts[1][0])
 
 	const txn_payload: ClientDelegatedTxnDto = {
 		psnap_image: image_parts[1],
 		psnap_image_encoding: image_parts[0],
-		psnap_app_version: '0.1',
+		psnap_app_version: '0.1.3',
 		psnap_description: 'This is the description for a test permasnap transaction omfg.',
 		psnap_content_tag: ['#groovy', '#test-transaction'],
 		psnap_context: 'development',
@@ -37,7 +36,7 @@ const key = arweaveProvider.generateWallet().then(async jwk => {
 
 	txn_payload.dpost_hash = arweaveProvider.hashPayload(txn_payload)
 	txn_payload.dpost_signature = arweaveProvider.sign(jwk, txn_payload.dpost_hash).toString('base64')
-	
+
 	try {
 		const res = await axios.post('http://localhost:3000/d_post/', txn_payload)
 		console.log(res.data)

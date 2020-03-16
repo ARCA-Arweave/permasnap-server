@@ -42,8 +42,6 @@ export class ArweaveProvider {
 			var pem = jwk2pem(key)
 			const signature_payload = 'hihi'
 			const signed_message = this.sign(key, signature_payload)
-			console.log(signed_message)
-			console.log(this.verify(pub_key, signature_payload, signed_message))
 			const hash = crypto
 				.createHash(this.hash_algorithm)
 				.update('abvc123')
@@ -98,57 +96,33 @@ export class ArweaveProvider {
 					expr2: dpost_owner
 				}
 			})
-			console.log(res)
+			// console.log(res)
 			return res
 		} catch (err) {
 			throw err
 		}
 	}
 
-	async getAllDelegatedPosts() {
+	async getAllDelegatedPosts(params: { psnap_app_version: string; psnap_context: string }) {
+		const { psnap_app_version, psnap_context } = params
 		try {
 			const res = await this.ar_instance.arql({
 				op: 'and',
 				expr1: {
 					op: 'equals',
-					expr1: 'dpost_version',
-					expr2: '0.1'
+					expr1: 'psnap_app_version',
+					expr2: psnap_app_version
 				},
 				expr2: {
 					op: 'equals',
 					expr1: 'psnap_context',
-					expr2: 'development'
+					expr2: psnap_context
 				}
 			})
 			return res
 		} catch (err) {
 			throw err
 		}
-	}
-
-	async getPostData(postIds: string[]): Promise<Array<any>> {
-		const resolved: ClientDelegatedTxnDto[] = []
-		const toResolve: Promise<Transaction>[] = []
-
-		postIds.forEach(id => {
-			toResolve.push(this.ar_instance.transactions.get(id))
-		})
-		return Promise.all(toResolve).then(transactions => {
-			transactions.forEach(tx => {
-				const permasnap_object = {} as ClientDelegatedTxnDto
-				const psnap_image = decodeURI(tx.get('data', { decode: true, string: true }))
-				const tags = tx.get('tags') as unknown
-				;(tags as string[]).forEach((tag: any) => {
-					// log.log(tag)
-					let key = tag.get('name', { decode: true, string: true }) as string
-					let value: string = tag.get('value', { decode: true, string: true })
-					permasnap_object[key] = value
-					permasnap_object.psnap_image = psnap_image
-					resolved.push(permasnap_object)
-				})
-			})
-			return resolved
-		})
 	}
 
 	hash(data: string): string {
@@ -161,17 +135,28 @@ export class ArweaveProvider {
 	verifyHash(post_data: ClientDelegatedTxnDto) {
 		const hash = this.hashPayload(post_data)
 		if (hash === post_data.dpost_hash) return true // hashes match
+		log.debug(hash)
+		log.debug(post_data.dpost_hash)
 		return false // hashes don't match
 	}
 
 	hashPayload(post_data: ClientDelegatedTxnDto) {
 		const to_hash = {}
-		for (let item in post_data) {
-			console.log(item)
-			if (item.indexOf('psnap') > -1) {
-				to_hash[item] = post_data[item]
+		const keys = Object.keys(post_data).sort()
+		keys.forEach(key => {
+			if (key.indexOf('psnap') > -1) {
+				to_hash[key] = post_data[key]
+				log.log(key)
 			}
-		}
+		})
+		// console.log(keys)
+		// for (let item in keys) {
+		// 	console.log(item)
+		// 	if (item.indexOf('psnap') > -1) {
+		// 		to_hash[item] = post_data[item]
+		// 		log.log(item)
+		// 	}
+		// }
 		return this.hash(JSON.stringify(to_hash))
 	}
 
@@ -179,7 +164,7 @@ export class ArweaveProvider {
 		try {
 			let tx = await this.ar_instance.createTransaction(
 				{
-					data: encodeURI('post_data.psnap_image')
+					data: encodeURI(post_data.psnap_image)
 				},
 				this.wallet
 			)
@@ -189,6 +174,8 @@ export class ArweaveProvider {
 					;(post_data[item] as string[]).forEach(content_tag => {
 						tx.addTag(item, content_tag)
 					})
+					// } else if (item.indexOf('dpost') > -1) {
+					// 	tx.addTag(item, post_data[item])
 				} else if (item !== 'psnap_image') {
 					tx.addTag(item, post_data[item])
 				}
@@ -203,5 +190,35 @@ export class ArweaveProvider {
 		} catch (err) {
 			return { err }
 		}
+	}
+
+	async getPostData(postIds: string[]): Promise<Array<ClientDelegatedTxnDto>> {
+		const resolved: ClientDelegatedTxnDto[] = []
+		const toResolve: Promise<Transaction>[] = []
+
+		postIds.forEach(id => {
+			toResolve.push(this.ar_instance.transactions.get(id))
+		})
+		return Promise.all(toResolve).then(transactions => {
+			transactions.forEach((tx: Transaction) => {
+				const permasnap_object = {} as ClientDelegatedTxnDto
+				permasnap_object.psnap_content_tag = []
+				const psnap_image = decodeURI(tx.get('data', { decode: true, string: true }))
+				const tags = tx.get('tags') as unknown
+				;(tags as string[]).forEach((tag: any) => {
+					let key = tag.get('name', { decode: true, string: true }) as string
+					let value = tag.get('value', { decode: true, string: true }) as string
+
+					if (key == 'psnap_content_tag') {
+						permasnap_object.psnap_content_tag.push(value)
+					} else {
+						permasnap_object[key] = value
+					}
+				})
+				permasnap_object.psnap_image = psnap_image
+				resolved.push(permasnap_object)
+			})
+			return resolved
+		})
 	}
 }

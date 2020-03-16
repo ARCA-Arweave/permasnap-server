@@ -34,12 +34,22 @@ export class ClientDelegatedTxnDto {
 
 	@ApiPropertyOptional()
 	@IsOptional()
+	@IsString()
+	psnap_location_lat?: string
+
+	@ApiPropertyOptional()
+	@IsOptional()
+	@IsString()
+	psnap_location_lng?: string
+
+	@ApiPropertyOptional()
+	@IsOptional()
 	@IsArray()
-	psnap_content_tag?: string[]
+	psnap_content_tag: string[]
 
 	@ApiProperty()
 	@IsString()
-	psnap_app_version: string = '0.1'
+	psnap_app_version: string
 
 	@ApiProperty()
 	@IsString()
