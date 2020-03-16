@@ -10,15 +10,11 @@ const run = async () => {
 	log.log(d_posts)
 	if (!d_posts.length) return
 	const txns = await arweaveProvider.getPostData(d_posts)
-
-	const results: boolean[] = []
-
 	const delegated_post_data = txns[0]
-
 	const { dpost_hash, dpost_owner, dpost_signature } = delegated_post_data
 	const verifyHash = arweaveProvider.verifyHash(delegated_post_data)
-	const verifyOwnership = arweaveProvider.verifyOwnership(dpost_owner, dpost_hash, new Buffer(dpost_signature, 'base64'))
-	// log.log(delegated_post_data)
+	const verifyOwnership = arweaveProvider.verifyOwnership(dpost_owner, dpost_hash, Buffer.from(dpost_signature, 'base64'))
+
 	log.log(`verifyHash: ${verifyHash}`)
 	log.log(`verifyOwnership: ${verifyOwnership}`)
 }

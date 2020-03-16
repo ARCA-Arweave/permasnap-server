@@ -96,7 +96,6 @@ export class ArweaveProvider {
 					expr2: dpost_owner
 				}
 			})
-			// console.log(res)
 			return res
 		} catch (err) {
 			throw err
@@ -149,14 +148,6 @@ export class ArweaveProvider {
 				log.log(key)
 			}
 		})
-		// console.log(keys)
-		// for (let item in keys) {
-		// 	console.log(item)
-		// 	if (item.indexOf('psnap') > -1) {
-		// 		to_hash[item] = post_data[item]
-		// 		log.log(item)
-		// 	}
-		// }
 		return this.hash(JSON.stringify(to_hash))
 	}
 
@@ -174,13 +165,10 @@ export class ArweaveProvider {
 					;(post_data[item] as string[]).forEach(content_tag => {
 						tx.addTag(item, content_tag)
 					})
-					// } else if (item.indexOf('dpost') > -1) {
-					// 	tx.addTag(item, post_data[item])
 				} else if (item !== 'psnap_image') {
 					tx.addTag(item, post_data[item])
 				}
 			}
-
 			await this.ar_instance.transactions.sign(tx, this.wallet)
 			const post = await this.ar_instance.transactions.post(tx)
 			if (post.status >= 400) {
@@ -203,19 +191,17 @@ export class ArweaveProvider {
 			transactions.forEach((tx: Transaction) => {
 				const permasnap_object = {} as ClientDelegatedTxnDto
 				permasnap_object.psnap_content_tag = []
-				const psnap_image = decodeURI(tx.get('data', { decode: true, string: true }))
+				permasnap_object.psnap_image = decodeURI(tx.get('data', { decode: true, string: true }))
 				const tags = tx.get('tags') as unknown
 				;(tags as string[]).forEach((tag: any) => {
-					let key = tag.get('name', { decode: true, string: true }) as string
-					let value = tag.get('value', { decode: true, string: true }) as string
-
+					let key = tag.get('name', { decode: true, string: true })
+					let value = tag.get('value', { decode: true, string: true })
 					if (key == 'psnap_content_tag') {
 						permasnap_object.psnap_content_tag.push(value)
 					} else {
 						permasnap_object[key] = value
 					}
 				})
-				permasnap_object.psnap_image = psnap_image
 				resolved.push(permasnap_object)
 			})
 			return resolved
