@@ -9,6 +9,7 @@ import { WalletProvider } from './wallet.provider'
 import log from '../utils/logger'
 import { ReadPreference } from 'typeorm'
 import Transaction from 'arweave/node/lib/transaction'
+import { and, or, equals } from 'arql-ops'
 
 @Injectable()
 export class ArweaveProvider {
@@ -81,21 +82,12 @@ export class ArweaveProvider {
 			)
 	}
 
-	async checkPostExists(dpost_hash: string, dpost_owner: string) {
+	async checkPostExists(dpost_hash: string) {
+		const myQuery = and(equals('dpost_hash', dpost_hash))
 		try {
-			const res = await this.ar_instance.arql({
-				op: 'and',
-				expr1: {
-					op: 'equals',
-					expr1: 'dpost_hash',
-					expr2: dpost_hash
-				},
-				expr2: {
-					op: 'equals',
-					expr1: 'dpost_owner',
-					expr2: dpost_owner
-				}
-			})
+			const res = await this.ar_instance.arql(myQuery)
+			log.log(res)
+			log.log(res.length)
 			return res
 		} catch (err) {
 			throw err
@@ -104,6 +96,7 @@ export class ArweaveProvider {
 
 	async getAllDelegatedPosts(params: { psnap_app_version: string; psnap_context: string }) {
 		const { psnap_app_version, psnap_context } = params
+
 		try {
 			const res = await this.ar_instance.arql({
 				op: 'and',
@@ -160,6 +153,9 @@ export class ArweaveProvider {
 				this.wallet
 			)
 
+			/** App Meta */
+			tx.addTag('App-Name', 'permasnap')
+			tx.addTag('App-Name', 'dpost')
 			for (let item in post_data) {
 				if (item === 'psnap_content_tag') {
 					;(post_data[item] as string[]).forEach(content_tag => {

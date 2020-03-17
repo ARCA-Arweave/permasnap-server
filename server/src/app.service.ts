@@ -12,7 +12,7 @@ export class AppService {
 			const { dpost_hash, dpost_owner, dpost_signature } = delegated_post_data
 
 			/** Step - 1 Check if the hash already exists on arweave */
-			const hash_exists = await this.arweaveProvider.checkPostExists(dpost_hash, dpost_owner)
+			const hash_exists = await this.arweaveProvider.checkPostExists(dpost_hash)
 			if (hash_exists.length) return new Error('this delegated post hash already exists')
 
 			/** Step - 2 verify the signature */
