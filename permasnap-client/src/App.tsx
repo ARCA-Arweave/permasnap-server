@@ -2,14 +2,12 @@ import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
-  IonIcon,
   IonRouterOutlet,
   IonFab,
   IonFabButton,
   isPlatform
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { images, camera, searchSharp } from 'ionicons/icons';
 import { Plugins } from "@capacitor/core";
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
@@ -54,19 +52,19 @@ const App: React.FC = () => {
             <Route path="/tab3" component={Tab3} exact={true} />
             <Route path="/" render={() => <Redirect to="/tab2" />} exact={true} />
           </IonRouterOutlet>
-          <IonFab vertical='bottom' horizontal='start' class={classIonFabs+' ion-padding-start ion-margin-start'}>
+          <IonFab vertical='bottom' horizontal='start' class='ion-padding-bottom ion-margin-bottom ion-padding-start ion-margin-start'>
             <IonFabButton color="secondary" href='/tab1'>
-              <img src={require('./assets/img/icon-images.svg')} />
+              <img src={require('./assets/img/icon-images.svg')} alt="images" />
             </IonFabButton>
           </IonFab>
-          <IonFab vertical='bottom' horizontal='center' class={classIonFabs}>
+          <IonFab vertical='bottom' horizontal='center' class='ion-padding-bottom ion-margin-bottom'>
             <IonFabButton color='primary' href='/tab2' onClick={() => alert("take a pic")}>
-              <img src={require('./assets/img/icon-camera-200.png')} />
+              <img src={require('./assets/img/icon-camera-200.png')} alt="camera" />
             </IonFabButton>
           </IonFab>
-          <IonFab vertical='bottom' horizontal='end' class={classIonFabs+' ion-padding-end ion-margin-end'}>
+          <IonFab vertical='bottom' horizontal='end' class='ion-padding-bottom ion-margin-bottom ion-padding-end ion-margin-end'>
             <IonFabButton color='tertiary'  href='/tab3'>
-              <img src={require('./assets/img/icon-eye.svg')} />
+              <img src={require('./assets/img/icon-eye.svg')} alt="gallery" />
             </IonFabButton>
           </IonFab>
       </IonReactRouter>
@@ -76,5 +74,3 @@ const App: React.FC = () => {
 
 export default App;
 
-const classIonFabs = 'ion-padding-bottom ion-margin-bottom'
-const classFabIcons = "bigger" 
