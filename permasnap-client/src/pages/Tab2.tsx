@@ -1,7 +1,8 @@
 import React from 'react';
-import { IonContent, IonPage, IonCard, IonCardTitle, IonGrid, IonCardContent, IonCardHeader, IonRow, IonCardSubtitle } from '@ionic/react';
+import { IonContent, IonPage, IonCard, IonCardTitle, IonGrid, IonCardContent, IonCardHeader, IonRow, IonCardSubtitle, IonIcon, IonLabel } from '@ionic/react';
 import './Tab2.css';
 import Header from '../components/Header'
+import imgChevron from '../assets/img/chevron.svg'
 
 const Tab2: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const Tab2: React.FC = () => {
           </IonRow>
 					<IonRow style={s.row}>
             <IonCard color='primary' style={s.card} button={true} onClick={()=>alert('click!')}>
+              <IonIcon src={imgChevron}  /><IonLabel>View Feed</IonLabel><IonIcon src={imgChevron}  />
               <IonCardTitle>View Feed</IonCardTitle>
             </IonCard>
           </IonRow>
