@@ -25,7 +25,7 @@ const Tab2: React.FC = () => {
             </IonCard>
           </IonRow>
 					<IonRow style={s.row}>
-            <IonCard color='primary' style={s.card}>
+            <IonCard color='primary' style={s.card} button={true} onClick={()=>alert('click!')}>
               <IonCardTitle>View Feed</IonCardTitle>
             </IonCard>
           </IonRow>
