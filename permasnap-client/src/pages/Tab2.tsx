@@ -12,7 +12,7 @@ const Tab2: React.FC = () => {
 					<IonRow style={s.row}>
             <img src={require('../assets/img/branding.svg')} alt="Permasnap logo" width='100%'/>
           </IonRow>
-					<IonRow style={{ height: '40%', ...s.row}}>
+					<IonRow style={{ ...s.row}}>
             <IonCard color='tertiary' style={s.card}>
               <IonCardHeader>
                 <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
@@ -24,7 +24,11 @@ const Tab2: React.FC = () => {
               </IonCardContent>
             </IonCard>
           </IonRow>
-					<IonRow style={s.row}></IonRow>
+					<IonRow style={s.row}>
+            <IonCard color='primary' style={s.card}>
+              <IonCardTitle>View Feed</IonCardTitle>
+            </IonCard>
+          </IonRow>
 				</IonGrid>
 			</IonContent>
 		</IonPage>
@@ -35,7 +39,7 @@ export default Tab2;
 
 const s = {
   grid: {
-    height: '100%',
+    height: '80%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -47,8 +51,9 @@ const s = {
   },
   card: {
     width: '100%',
-    borderRadius: '10%',
+    borderRadius: 20,
     margin: 0,
+    padding: 10,
     textAlign: 'center'
   }
 }
