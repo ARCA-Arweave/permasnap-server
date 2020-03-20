@@ -1,7 +1,7 @@
 Uses https://www.npmjs.com/package/capacitor-resources 
 
 *************************************************** 
-capacitor-resources does not seem to work very well, omit this step by using
+capacitor-resources does not seem to work very well, omit this step, instead use:
 https://apetools.webprofusion.com/#/tools/imagegorilla
 *************************************************** 
 
