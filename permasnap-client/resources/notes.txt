@@ -1,0 +1,14 @@
+Uses https://www.npmjs.com/package/capacitor-resources 
+
+*************************************************** 
+capacitor-resources does not seem to work very well, omit this step, instead use:
+https://apetools.webprofusion.com/#/tools/imagegorilla
+*************************************************** 
+
+Usage
+Required files
+
+Add your icon.png (1024x1024 px) and splash.png (2732x2732 px) files to the 'resources' folder under the root of your capacitor based project.
+
+run [updated]:
+node resources/resources.js"
