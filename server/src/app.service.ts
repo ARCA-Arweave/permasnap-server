@@ -11,6 +11,8 @@ export class AppService {
 		try {
 			const { dpost_hash, dpost_owner, dpost_signature } = delegated_post_data
 
+			/** Step 0 - Check if item has been posted in DB, if it has, return that TXID */
+
 			/** Step - 1 Check if the hash already exists on arweave */
 			const hash_exists = await this.arweaveProvider.checkPostExists(dpost_hash)
 			if (hash_exists.length) return new Error('this delegated post hash already exists')

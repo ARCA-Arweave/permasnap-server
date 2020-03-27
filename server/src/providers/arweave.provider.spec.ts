@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { ArweaveProvider } from './arweave.provider'
 import { WalletProvider } from './wallet.provider'
+import log from '../utils/logger'
 
 describe('Arweave Provider', () => {
 	let provider: ArweaveProvider
@@ -55,8 +56,8 @@ describe('Arweave Provider', () => {
 	it('checkPostExists - should find existing post', async () => {
 		const dpost_hash = '75be7fadf19f2787672925c256492de034d80e8b1ae9057cc7adfbc4274cc083'
 		const results = await provider.checkPostExists(dpost_hash)
-		const exists = results.length < 0 ? false : true
-		expect(exists).toEqual(false)
+		const exists = results.length === 0 ? false : true
+		expect(exists).toEqual(true)
 	})
 
 	/** verifyHash */
@@ -64,6 +65,7 @@ describe('Arweave Provider', () => {
 	it('verifyHash - should pass', async () => {
 		const id = 'gEgy2wQ-uKixoiZgvc_cU0R-E5vmRgCqLzZd_W-TryU'
 		const post_data = await provider.getPostData([id])
+		log.log(post_data)
 		const verified = provider.verifyHash(post_data[0])
 		expect(verified).toEqual(true)
 	})
