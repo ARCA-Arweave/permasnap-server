@@ -45,17 +45,17 @@ const App: React.FC = () => {
             <Route path="/" render={() => <Redirect to="/tab2" />} exact={true} />
           </IonRouterOutlet>
           <IonFab vertical='bottom' horizontal='start' class='ion-padding-bottom ion-margin-bottom ion-padding-start ion-margin-start'>
-            <IonFabButton color="secondary" href='/tab1'>
+            <IonFabButton color="secondary" routerLink='/tab1' routerDirection='none'>
               <img src={require('./assets/img/icon-images.svg')} alt="images" />
             </IonFabButton>
           </IonFab>
           <IonFab vertical='bottom' horizontal='center' class='ion-padding-bottom ion-margin-bottom'>
-            <IonFabButton color='primary' href='/tab2' onClick={() => alert("take a pic")}>
+            <IonFabButton color='primary' routerLink='/tab2' routerDirection='none' onClick={() => alert("take a pic")}>
               <img src={require('./assets/img/icon-camera-200.png')} alt="camera" />
             </IonFabButton>
           </IonFab>
           <IonFab vertical='bottom' horizontal='end' class='ion-padding-bottom ion-margin-bottom ion-padding-end ion-margin-end'>
-            <IonFabButton color='tertiary'  href='/tab3'>
+            <IonFabButton color='tertiary' routerLink='/tab3' routerDirection='none'>
               <img src={require('./assets/img/icon-eye.svg')} alt="gallery" />
             </IonFabButton>
           </IonFab>

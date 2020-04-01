@@ -1,4 +1,3 @@
-import { Dispatch } from 'redux';
 import { ActionTypes } from './actionTypes';
 import { JWKInterface } from 'arweave/web/lib/wallet';
 
