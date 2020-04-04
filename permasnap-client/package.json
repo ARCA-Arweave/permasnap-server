@@ -18,12 +18,19 @@
     "@types/react-router": "^5.1.4",
     "@types/react-router-dom": "^5.1.3",
     "arweave": "^1.6.0",
+<<<<<<< HEAD
+=======
+    "axios": "^0.19.2",
+>>>>>>> 31d9a320cc021d63c3f7a9548f62b937a53b7793
     "ionicons": "^5.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-redux": "^7.2.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "typescript": "3.7.4"
   },
   "scripts": {
@@ -48,7 +55,8 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "1.5.1"
+    "@capacitor/cli": "1.5.1",
+    "@types/react-redux": "^7.1.7"
   },
   "description": "An Ionic project"
 }
