@@ -17,7 +17,3 @@ export interface IStoreState {
   wallet: JWKInterface | {}; // remove these nulls later
 }
 
-export const reducers = combineReducers<IStoreState>({
-  todos: todosReducer,
-  wallet: walletReducer
-});
