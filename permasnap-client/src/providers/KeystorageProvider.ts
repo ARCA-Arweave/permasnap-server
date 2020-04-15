@@ -64,7 +64,7 @@ export const runTest = () =>{
 	})
 
 	// test getItem: key not found
-	const _failkey = 'testFailureKeyname';
+	const _failkey = 'testFailureKeyname'
 	SecureStoragePlugin.get({ key: _failkey })
   .catch((error: IStorageError) => {
 		console.log('Error! '+JSON.stringify(error));
@@ -79,7 +79,7 @@ export const runTest = () =>{
 	const _removeValue = 'some value'
 	SecureStoragePlugin.set({key:_removeKey, value:_removeValue}).then((success:any) => {
 		removeItem(_removeKey).then(() => {
-			getItem(_removeKey).then(() => console.log("oops! key was not removed")).catch(() => console.log('success! key was removed'))
+			getItem(_removeKey).then(() => console.log("Test failed! key was not removed")).catch(() => console.log('Test success! key was removed'))
 		})
 	})
 }
