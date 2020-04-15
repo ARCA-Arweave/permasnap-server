@@ -1,7 +1,4 @@
-import { combineReducers } from 'redux';
 import { JWKInterface } from 'arweave/web/lib/wallet';
-import { todosReducer } from './todos';
-import { walletReducer } from './wallet';
 
 export interface ITodo {
   id: number;

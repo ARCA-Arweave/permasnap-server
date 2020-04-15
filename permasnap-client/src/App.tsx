@@ -33,7 +33,6 @@ if(isPlatform('android')){
 const App: React.FC = () => {
   useEffect(() => {
     Plugins.SplashScreen.hide()
-    console.log('THIS TEXT SHOULD ONLY PRINT ONCE')
   },[]) //like c'tor
   return (
     <IonApp>

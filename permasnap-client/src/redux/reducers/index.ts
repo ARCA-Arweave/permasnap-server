@@ -4,17 +4,25 @@ import { IStoreState } from './reducerTypes';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage' //defaults to local storage for web
+import * as keyStorageProvider from '../../providers/KeystorageProvider'
+import { isPlatform } from '@ionic/react';
 
+
+let keyStorage = storage // stores wallet unsafely for non-production web environment
+if(isPlatform('hybrid')){
+	keyStorage = keyStorageProvider
+	keyStorageProvider.runTest()
+}
 
 const rootPersistConfig = {
 	key: 'root',
-	storage,
+	storage: storage,
 	blacklist: ['wallet']
 }
 
 const walletPersistConfig = {
 	key: 'wallet',
-	storage, //change this to secure version
+	storage: keyStorage, 
 }
 
 const rootReducer = combineReducers({
