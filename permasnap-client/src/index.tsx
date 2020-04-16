@@ -4,11 +4,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 /* Redux stuff */
 import { Provider } from "react-redux";
-import store from './redux/store'
+import { PersistGate } from 'redux-persist/integration/react'; //delays until data retrieved
+import store, { persistor} from './redux/store'
 
 ReactDOM.render(
 	<Provider store={store}>
-		<App />
+		<PersistGate persistor={persistor} loading={(<h1>I hope you do not see this message</h1>)}>
+			<App />
+		</PersistGate>
 	</Provider>, document.getElementById('root')
 		
 );

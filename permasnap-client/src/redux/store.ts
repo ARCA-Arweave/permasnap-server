@@ -1,15 +1,16 @@
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import { logger } from 'redux-logger';
 import { reducers } from './reducers'
+import { persistStore } from 'redux-persist';
 
 
-const middleware = [thunk]
+const middleware = [thunk, logger]
 
 
-export default createStore(
+const store = createStore(
 	reducers, 
-	compose(
-		applyMiddleware(...middleware),
-		(window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-	)
-);
+	applyMiddleware(...middleware)
+)
+export const persistor = persistStore(store)
+export default store

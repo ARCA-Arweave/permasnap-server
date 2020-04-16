@@ -23,10 +23,12 @@ To start in the browser without mobile: -- (this will probably not work very wel
 
 For mobile development:
 
-`npm run build`
+`ionic cap sync android`
 
-`ionic cap run android -l --host=your-dev-machines-ip-address`
+`ionic cap open android`
 
 or
 
-`ionic cap run ios -l --host=your-dev-machines-ip-address`
+`ionic cap sync ios`
+
+`ionic cap open ios`

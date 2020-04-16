@@ -1,7 +1,4 @@
-import { combineReducers } from 'redux';
 import { JWKInterface } from 'arweave/web/lib/wallet';
-import { todosReducer } from './todos';
-import { walletReducer } from './wallet';
 
 export interface ITodo {
   id: number;
@@ -17,7 +14,3 @@ export interface IStoreState {
   wallet: JWKInterface | {}; // remove these nulls later
 }
 
-export const reducers = combineReducers<IStoreState>({
-  todos: todosReducer,
-  wallet: walletReducer
-});
