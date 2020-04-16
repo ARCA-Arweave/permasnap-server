@@ -43,7 +43,7 @@ export const removeItem = (_key:string):Promise<any> => {
 }
 
 /* Tests */
-export const runTest = () =>{
+export const runTesting = () =>{
 
 	// test setItem
 	const _wkey = "wrapkeyname"
@@ -54,13 +54,13 @@ export const runTest = () =>{
 	
 	// test getItem: key found
 	getItem(_wkey).then(result => { 
-		console.log(result)
+		console.log("Test success! Returned value: "+ JSON.stringify(result))
 	})
-
+	
 	// test getItem: key not found
 	const _wrapfailkey = 'wrapFailKeyname'
 	getItem(_wrapfailkey).catch(error => {
-		console.log(error)
+		console.log("Test success! Error message: "+ error)
 	})
 	
 	// test removeItem

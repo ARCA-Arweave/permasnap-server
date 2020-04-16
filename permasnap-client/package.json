@@ -38,7 +38,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": " react-scripts test",
     "eject": "react-scripts eject",
     "postinstall": "npx jetifier"
   },
@@ -60,8 +60,7 @@
   "devDependencies": {
     "@capacitor/cli": "^2.0.0",
     "@types/react-redux": "^7.1.7",
-    "jetifier": "^1.6.5",
-    "remote-redux-devtools": "^0.5.16"
+    "jetifier": "^1.6.5"
   },
   "description": "An Ionic project"
 }

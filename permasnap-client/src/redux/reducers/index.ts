@@ -11,7 +11,7 @@ import { isPlatform } from '@ionic/react';
 let keyStorage = storage // stores wallet unsafely for non-production web environment
 if(isPlatform('hybrid')){
 	keyStorage = keyStorageProvider
-	keyStorageProvider.runTest()
+	keyStorageProvider.runTesting() // make this run only in test environment?
 }
 
 const rootPersistConfig = {

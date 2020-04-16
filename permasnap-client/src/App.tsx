@@ -24,10 +24,8 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 /* Hitting backButton on Android exits */
-if(isPlatform('android')){
-  Plugins.App.addListener('backButton',() => {
-    Plugins.App.exitApp();
-  })
+if(process.env.NODE_ENV !== 'test' && isPlatform('android')){
+    Plugins.App.addListener('backButton',() => Plugins.App.exitApp() )
 }
 
 const App: React.FC = () => {

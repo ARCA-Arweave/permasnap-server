@@ -28,11 +28,11 @@ const Tab1: React.FC = () => {
         </IonHeader>
         <ExploreContainer name="Tab 1 page" />
         <hr />
-        <IonButton onClick={() => {
+        {/* <IonButton onClick={() => {
           generateWallet().then((jwk) => dispatch( changeWallet(jwk) ) ) //generate wallet and store in redux
         }}>
           Gimme new Wallet
-        </IonButton>
+        </IonButton> */}
         { JSON.stringify(wallet)}
       </IonContent>
     </IonPage>
