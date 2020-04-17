@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, HttpException } from '@nestjs/common'
 import { ClientDelegatedTxnDto } from './types/dto'
 import log from './utils/logger'
 import { ArweaveProvider } from './providers/arweave.provider'
@@ -15,7 +15,7 @@ export class AppService {
 
 			/** Step - 1 Check if the hash already exists on arweave */
 			const hash_exists = await this.arweaveProvider.checkPostExists(dpost_hash)
-			if (hash_exists.length) return new Error('this delegated post hash already exists')
+			if (hash_exists.length) return new HttpException('this delegated post hash already exists', 500)
 
 			/** Step - 2 verify the signature */
 			if (!this.arweaveProvider.verifyOwnership(dpost_owner, dpost_hash, Buffer.from(dpost_signature, 'base64'))) throw 'dpost_signature could not be verified.'

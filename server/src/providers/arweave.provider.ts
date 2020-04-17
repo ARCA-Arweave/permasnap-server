@@ -157,9 +157,9 @@ export class ArweaveProvider {
 			tx.addTag('App-Name', 'permasnap')
 			tx.addTag('App-Name', 'dpost')
 			for (let item in post_data) {
-				if (item === 'psnap_hash_tags') {
-					;(post_data[item] as string[]).forEach(hash_tag => {
-						tx.addTag(item, hash_tag)
+				if (item === 'psnap_content_tag') {
+					;(post_data[item] as string[]).forEach(content_tag => {
+						tx.addTag(item, content_tag)
 					})
 				} else if (item !== 'psnap_image') {
 					tx.addTag(item, post_data[item])
