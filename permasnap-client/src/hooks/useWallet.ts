@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { generateWallet, getAddress, isInstanceofJwkInterface } from './ArweaveProvider';
+import { generateWallet, getAddress, isInstanceofJwkInterface } from '../providers/ArweaveProvider';
 import { changeWallet } from '../redux/actions';
 import { IStoreState } from '../redux/reducers';
 import { JWKInterface } from 'arweave/web/lib/wallet';
@@ -11,19 +11,23 @@ export const useWallet = () => {
 	const [arAddress, setArAddress] = useState<string>()
 	
 	useEffect( () => {
-		if( isInstanceofJwkInterface(arWallet)  ){ //check if we have a valid wallet
-			getAddress(arWallet as JWKInterface).then(addr =>	setArAddress(addr) ) 
-		}else{ 
-			//create wallet and let user know 
-			generateWallet().then((jwk) => {
+		const init = async () => {
+			//check if we have a valid wallet
+			if( isInstanceofJwkInterface(arWallet)  ){ 
+				let addr = await getAddress(arWallet as JWKInterface)
+				setArAddress( addr )
+			}else{ 
+				//create wallet and let user know 
+				let jwk = await generateWallet()
 				dispatch( changeWallet(jwk) ) // store wallet in redux
-				getAddress(jwk).then(addr => {
-					setArAddress(addr) 
-					alert("PLACEHOLDER. a new wallet has been created for you "+ addr )
-				}) 
-			})
+				let addr = await getAddress(jwk)
+				setArAddress(addr)
+				alert("PLACEHOLDER. a new wallet has been created for you "+ addr )
+			}
 		}
+		init()
 	}, []) // <-Like C'tor
+
 
 	const updateWallet = (jwk: JWKInterface) => {
 		dispatch(changeWallet(jwk))

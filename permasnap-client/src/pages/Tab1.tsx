@@ -3,7 +3,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from 
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 /* redux imports */
-import { useWallet } from '../providers/useWallet';
+import { useWallet } from '../hooks/useWallet';
 
 const Tab1: React.FC = () => {
   const { arWallet, arAddress } = useWallet()

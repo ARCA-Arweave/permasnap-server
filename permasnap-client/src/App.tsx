@@ -6,7 +6,7 @@ import { Plugins } from "@capacitor/core";
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
-import { useWallet } from './providers/useWallet';
+import { useWallet } from './hooks/useWallet';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -30,9 +30,10 @@ if(process.env.NODE_ENV !== 'test' && isPlatform('android')){
 }
 
 const App: React.FC = () => {
+  const { arAddress } = useWallet()
   useEffect(() => {
     Plugins.SplashScreen.hide()
-    //TODO: call useWallet here for first launch
+    console.log(JSON.stringify('address: '+arAddress)) //call useWallet to initialise
   },[]) //like c'tor
   return (
     <IonApp>
