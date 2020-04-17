@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-const wallet = require('../secrets/arweave-keyfile.json')
+import wallet from '../secrets/arweave-keyfile.json'
 import log from '../utils/logger'
 
 @Injectable()
