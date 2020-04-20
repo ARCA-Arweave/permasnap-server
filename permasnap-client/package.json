@@ -20,8 +20,14 @@
     "@types/redux-logger": "^3.0.7",
     "@types/remote-redux-devtools": "^0.5.4",
     "arweave": "^1.6.0",
+<<<<<<< HEAD
+=======
     "axios": "^0.19.2",
+<<<<<<< HEAD
+>>>>>>> 31d9a320cc021d63c3f7a9548f62b937a53b7793
+=======
     "capacitor-secure-storage-plugin": "^0.3.2",
+>>>>>>> 2b5fe9020eeb3cb814a0591f1863051250738bd7
     "ionicons": "^5.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
