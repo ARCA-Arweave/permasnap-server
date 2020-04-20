@@ -9,6 +9,7 @@ export interface ITodo {
 
 //export interface IWallet <- single object already defined by JWKInterface
 
+// this is the interface for use in useSelector
 export interface IStoreState {
   todos: ITodo[];
   wallet: JWKInterface | {}; // remove these nulls later

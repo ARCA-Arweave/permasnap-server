@@ -3,14 +3,10 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from 
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 /* redux imports */
-import { useSelector, useDispatch } from 'react-redux';
-import { IStoreState } from '../redux/reducers';
-import { generateWallet } from '../providers/ArweaveProvider';
-import { changeWallet } from '../redux/actions';
+import { useWallet } from '../hooks/useWallet';
 
 const Tab1: React.FC = () => {
-  const wallet = useSelector((state: IStoreState) => state.wallet) // redux hook that grabs a piece of the store (like mapStateToProps)
-  const dispatch = useDispatch() // redux hook to get dispatch function. this is the alternative to using connect() 
+  const { arWallet, arAddress } = useWallet()
   
   
   return (
@@ -33,7 +29,9 @@ const Tab1: React.FC = () => {
         }}>
           Gimme new Wallet
         </IonButton> */}
-        { JSON.stringify(wallet)}
+        Wallet Address: {arAddress} 
+        <hr />
+        Actual Wallet: { JSON.stringify(arWallet)}
       </IonContent>
     </IonPage>
   );
