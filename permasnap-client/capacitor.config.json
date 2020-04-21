@@ -1,8 +1,0 @@
-{
-  "appId": "online.perma.snap",
-  "appName": "Permasnap",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "build",
-  "cordova": {}
-}

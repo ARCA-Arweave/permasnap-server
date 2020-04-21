@@ -1,7 +1,0 @@
-{
-  "name": "Permasnap",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
