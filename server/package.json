@@ -27,6 +27,7 @@
     "@nestjs/typeorm": "^6.3.4",
     "arql-ops": "^1.0.0",
     "arweave": "^1.6.0",
+    "base64-to-uint8array": "^1.0.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
     "colors": "^1.4.0",

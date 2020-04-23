@@ -11,6 +11,8 @@ import { ReadPreference } from 'typeorm'
 import Transaction from 'arweave/node/lib/transaction'
 import { and, or, equals } from 'arql-ops'
 
+const toUint8Array = require('base64-to-uint8array')
+
 @Injectable()
 export class ArweaveProvider {
 	hash_algorithm = 'sha256'
@@ -145,15 +147,17 @@ export class ArweaveProvider {
 	}
 
 	public async postDelegatedTxn(post_data: ClientDelegatedTxnDto) {
+		let picDecoded = toUint8Array(post_data.psnap_image)
 		try {
 			let tx = await this.ar_instance.createTransaction(
 				{
-					data: encodeURI(post_data.psnap_image)
+					data: picDecoded //encodeURI(post_data.psnap_image)
 				},
 				this.wallet
 			)
-
+			let mediaType = post_data.psnap_image_encoding.split(';')[0].split(':')[1] 
 			/** App Meta */
+			tx.addTag('Content-Type', mediaType)
 			tx.addTag('App-Name', 'permasnap')
 			tx.addTag('App-Name', 'dpost')
 			for (let item in post_data) {
