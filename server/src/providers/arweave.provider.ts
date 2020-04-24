@@ -155,7 +155,7 @@ export class ArweaveProvider {
 				},
 				this.wallet
 			)
-			let mediaType = post_data.psnap_image_encoding.split(';')[0].split(':')[1] 
+			let mediaType = post_data.psnap_image_encoding.split(';')[0].split(':')[1] // format is "data:media/type;base64"
 			/** App Meta */
 			tx.addTag('Content-Type', mediaType)
 			tx.addTag('App-Name', 'permasnap')
