@@ -21,7 +21,7 @@ export class ArweaveProvider {
 
 	constructor(private readonly walletProvider: WalletProvider) {
 		this.ar_instance = Arweave.init({
-			host: 'arweave.net', // Hostname or IP address for a Arweave host
+			host: 'perma.online', // Hostname or IP address for a Arweave host
 			port: 443, // Port
 			protocol: 'https', // Network protocol http or https
 			timeout: 20000, // Network request timeouts in milliseconds
