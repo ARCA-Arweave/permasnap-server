@@ -171,10 +171,11 @@ export class ArweaveProvider {
 			}
 			await this.ar_instance.transactions.sign(tx, this.wallet)
 			const post = await this.ar_instance.transactions.post(tx)
-			if (post.status >= 400) {
+			let status = (await this.ar_instance.transactions.getStatus(tx.id)).status
+			if (status >= 400) {
 				throw post
 			}
-			return { status: post.status, id: tx.id }
+			return { status: status, id: tx.id }
 		} catch (err) {
 			throw { err }
 		}
